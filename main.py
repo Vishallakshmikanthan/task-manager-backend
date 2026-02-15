@@ -6,7 +6,19 @@ import models
 import schemas 
 from database import engine, SessionLocal
 
+
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # later restrict to Vercel domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 models.Base.metadata.create_all(bind=engine)
 def get_db():
     db = SessionLocal()
